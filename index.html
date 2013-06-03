@@ -1,64 +1,63 @@
 <!DOCTYPE html>
 <html lang="ja">
-<head>
-<meta charset="UTF-8">
-<meta name="author" content="virus">
-<title>
-</title>
-<script type="text/javascript" src="file:///Users/virus/src/prototype/dist/prototype.js">
-</script>
-<script src="./javascript/main.js" type="text/javascript" charset="utf-8"></script>
-<!--
-<meta name="generator" content="vim">
--->
-</head>
-<body>
- <div id="settings">
-  <input id="questionData" type="file" /> <button id="questionLoad">問題文読込</button>
-  <br />
-  <input id="userData" type="file" /> <button id="loadButton">Load</button>
-  <br />
-  <button id="saveButton">Save</button>
-  <div id="notice">
-   問題製作者各位:<br />
-   エンコードはUTF-8でお願いします <br />
-  </div>
-  <div id="questionLoadingWrapper">
+ <head>
+  <meta charset="UTF-8" />
+  <meta name="author" content="virus" />
+  <title>
+  </title>
+  <script type="text/javascript" src="file:///Users/virus/src/prototype/dist/prototype.js">
+  </script>
+  <script src="./javascript/main.js" type="text/javascript" charset="utf-8"></script>
+ </head>
+ <body>
+  <div id="settings">
+   <input id="questionData" type="file" /> <button id="questionLoad" disabled>問題文読込</button>
+   <br />
+   <input id="userData" type="file" /> <button id="loadButton" disabled>Load</button>
+   <br />
+   <button id="saveButton" disabled>Save</button>
+   <div id="notice">
+    問題製作者各位:<br />
+    エンコードはUTF-8でお願いします <br />
+   </div>
+   <div id="questionLoadingWrapper">
     QuestionData:<span id="questionLoading">X</div>
+   </div>
+   <div id="userDataLoadingWrapper">
+    UserData:<span id="userDataLoading">X</span>
+   </div>
+   <button id="TestStart" disabled>
+    Test Start
+   </button>
+   <ul id="QuestionDataList">
+   </ul>
   </div>
-  <div id="userDataLoadingWrapper">
-   UserData:<span id="userDataLoading">X</span>
+  <div id="question">
+   <div id="statement">
+   </div>
   </div>
-  <button id="TestStart">
-   Test Start
-  </button>
- </div>
- <div id="question">
-  <div id="statement">
+  <div id="answer">
+   <input type="text" id="input" />
+   <div id="resulte">
+   </div>
   </div>
- </div>
- <div id="answer">
-  <input type="text" id="input" />
-  <div id="resulte">
+  <div id="status">
   </div>
- </div>
- <div id="status">
- </div>
- <span id="correct"></span> <br />
- <div id="wrongAnswerWrapper">
-  <table>
-   <thead>
-    <tr>
-     <td>問題ID</td>
-     <td>問題文</td>
-     <td>あなたの回答</td>
-     <td>正解</td>
-    </tr>
-   </thead>
-   <tbody id="wrongAnswers">
-   </tbody>
-  </table>
- </div>
-</body>
+  <span id="correct"></span> <br />
+  <div id="wrongAnswerWrapper">
+   <table>
+    <thead>
+     <tr>
+      <td>問題ID</td>
+      <td>問題文</td>
+      <td>あなたの回答</td>
+      <td>正解</td>
+     </tr>
+    </thead>
+    <tbody id="wrongAnswers">
+    </tbody>
+   </table>
+  </div>
+ </body>
 </html>
 
