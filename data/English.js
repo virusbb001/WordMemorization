@@ -1,0 +1,29 @@
+{
+ "QuestionName":"English Number",
+ "QuestionID":"EnglishNumberFirstHalfMiddleExam",
+ "Auther":"virus",
+ "version":"2013.6.2.001",
+ "memo":"前期テスト対策",
+ "question":[
+  {
+   "questionSentence":"1000",
+   "answer":"thousand"
+  },
+  {
+   "questionSentence":"100",
+   "answer":"hundred"
+  },
+  {
+   "questionSentence":"10",
+   "answer":"ten"
+  },
+  {
+   "questionSentence":"1",
+   "answer":"one"
+  },
+  {
+   "questionSentence":"2",
+   "answer":"two"
+  }
+ ]
+}
