@@ -128,7 +128,9 @@ var testingData={
 
 //ユーザーデータ読込
 function setUserData(){
+ //セーブデータはひとつのみ
  var userFile=$('userData').files[0];
+ $('saveLink').writeAttribute("download",userFile.name);
  var reader=new FileReader();
  reader.addEventListener('load',function(e){
   try{
@@ -262,9 +264,13 @@ function setQuestion(){
   //取り出す問題名
   var id=Math.floor(Math.random()*testingData.questionID.length);
   testingData.currentQuestion=testingData.questionID[id];
-  $('statement').update(questionData[testingData.currentQuestion].questionSentence);
+  var questionStr=questionData[testingData.currentQuestion].questionSentence;
+  var questionMisTookObj=userResult.MistookQuestion[questionData[testingData.currentQuestion].questionID];
+  if((!Object.isUndefined(questionMisTookObj))&&(!Object.isUndefined(questionMisTookObj[questionData[testingData.currentQuestion].questionNo]))){
+   questionStr+=("("+userResult.MistookQuestion[questionData[testingData.currentQuestion].questionID][questionData[testingData.currentQuestion].questionNo].time+"回)");
+  }
+  $('statement').update(questionStr);
   //出題した問題を外す
-  console.log(""+id+":"+testingData.questionID[id]);
   testingData.questionID.splice(id,1);
  }
 }
