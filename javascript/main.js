@@ -168,19 +168,23 @@ function generateUserDataFile(){
 
 //問題がファイル読込
 function setQuestionData(){
- var questionFile=$('questionData').files[0];
- var reader=new FileReader();
- reader.addEventListener('load',function(e){
-  try{
-   var questionData=eval("("+reader.result+")");
-   addQuestionData(questionData);
-  }catch(exception){
-   $('questionLoading').update("何かしらの例外が発生しました:"+exception.message+")");
-   console.log(exception);
-  }
- },true);
- reader.addEventListener('error',function(e){
-  var errorMessages=[
+ var files=$('questionData').files;
+ for(var i=0;i<files.length;i++){
+  var questionFile=files[i];
+  var reader=new FileReader();
+  reader.addEventListener('load',function(e){
+   try{
+    var questionData=eval("("+this.result+")");
+    addQuestionData(questionData);
+   }catch(exception){
+    console.log(this.result);
+    $('questionLoading').update("何かしらの例外が発生しました:"+exception.message+")");
+    console.log(e);
+    console.log(exception);
+   }
+  }.bindAsEventListener(reader),true);
+  reader.addEventListener('error',function(e){
+   var errorMessages=[
    "Error:0",
    "File Not Found",
    "Permission Error",
@@ -188,12 +192,13 @@ function setQuestionData(){
    "読込中にエラーが発生",
    "ファイルサイズが大きすぎる"
    ];
-   alert("Error:"+reader.error.code+":"+errorMessages[reader.error.code]);
- },true);
- reader.addEventListener('progress',function(e){
-  $('questionLoading').update((Math.floor(e.loaded/e.total*100))+"%");
- },true);
- reader.readAsText(questionFile,'UTF-8');
+  alert("Error:"+this.error.code+":"+errorMessages[this.error.code]);
+  }.bindAsEventListener(reader),true);
+  reader.addEventListener('progress',function(e){
+   $('questionLoading').update((Math.floor(e.loaded/e.total*100))+"%");
+  },true);
+  reader.readAsText(questionFile,'UTF-8');
+ }
 }
 
 //qDataを問題に追加
@@ -346,10 +351,10 @@ function showQuestionList(list) {
 
  for(var i=0;i<list.length;i++){
   $('QuestionDataList').insert(
-   {
-    bottom:new Element("li").update(""+list[i].QuestionName+"("+list[i].Auther+")")
-   }
-  );
+    {
+     bottom:new Element("li").update(""+list[i].QuestionName+"("+list[i].Auther+")")
+    }
+    );
  }
 }
 
