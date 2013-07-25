@@ -2,14 +2,15 @@
 function init() {
  if(!window.File){
   window.alert("File APIが使えません 他のブラウザに *至急* 変更してください");
+  return;
  }
+
  //IME判定設定
  $('input').observe("keypress",function(e){
   if((e.keyCode!=241)&&(e.keyCode!=242)){
    keypressCount++;
   }
  });
-
  $('input').observe("keyup",function (e) {
   keypressCount--;
   if(keypressCount<0){
@@ -26,6 +27,7 @@ function init() {
    }
   }
  });
+
 
  //ファイルが選択されているかどうか
  //問題
@@ -45,17 +47,22 @@ function init() {
   }
  });
 
+ // 問題読込
  $('questionLoad').observe("click",function(e){
   setQuestionData();
  });
+
+ // セーブデータ読込
  $('loadButton').observe("click",function(e){
   setUserData();
  });
 
+ //問題開始
  $('TestStart').observe("click",function(e){
   startTest();
  });
 
+ // セーブデータダウンロード
  $('saveButton').observe("click",function(e){
   generateUserDataFile();
  });
@@ -152,6 +159,7 @@ function setUserData(){
    "ファイルサイズが大きすぎる"
    ];
    $('userDataLoading').update("Error:"+reader.error.code+":"+errorMessages[reader.error.code]);
+   console.log("Error:"+reader.error.code+":"+errorMessages[reader.error.code])
  },true);
  reader.addEventListener('progress',function(e){
   $('userDataLoading').update(Math.floor(e.loaded/e.total*100));
@@ -231,6 +239,10 @@ function addQuestionData(qData) {
 
 //ユーザーデータの追加
 function addUserData(userData){
+ if(Object.isUndefined(userData.DataType)&&(userData!="UserSaveData")){
+  return;
+ }
+
  userResult=Object.extend(userResult,userData);
 }
 
