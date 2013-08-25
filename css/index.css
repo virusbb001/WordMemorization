@@ -1,0 +1,23 @@
+#FileDropBox{
+ height:80px;
+ width:100%;
+ border:solid 2px #000000;
+}
+
+#testDisplay{
+ display: none;
+}
+
+#testResult{
+ display: none;
+}
+
+/* ボタン以外を非表示 */
+#testResult>*:not(button){
+ display: none;
+}
+
+
+.mybody{
+ display: none;
+}

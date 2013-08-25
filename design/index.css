@@ -1,0 +1,17 @@
+#FileDropBox{
+ height:80px;
+ width:100%;
+ border:solid 2px #000000;
+}
+
+#testDisplay{
+ display: none;
+}
+
+#testResult{
+ display: none;
+}
+
+.mybody{
+ display: none;
+}
