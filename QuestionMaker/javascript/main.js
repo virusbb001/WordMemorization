@@ -26,6 +26,7 @@ $(function(){
  //ツールバーのセーブ
  //ここで警告を表示する
  $("#questionEditorToolBoxSave").on("click",function(e){
+  $(this).focus();
   var data=JSON.stringify(questionData);
   var blob=new Blob([data]);
   var blobURL=URL.createObjectURL(blob);
@@ -38,7 +39,6 @@ $(function(){
    $(this).attr("download",fileName);
   }
   $(this).attr("href",blobURL);
-  console.log(metaDataHasEmpty());
 
   //metaデータ入力欄に空白が有る
   if(metaDataHasEmpty()){
@@ -53,10 +53,12 @@ $(function(){
   if(messages!=""){
    var button=$("<button />").attr("data-dismiss","alert").attr("aria-hidden","true").html("&times;").addClass("close");
    console.log(button);
-   var alertDOM=$("<div />").text(messages).addClass("alert-dismissable").addClass("alert").addClass("fade").addClass("in").prependTo("body").prepend(button);
+   var alertDOM=$("<div />").text(messages).addClass("alert-dismissable").addClass("alert").addClass("alert-danger").addClass("fade").addClass("in").prependTo("body").prepend(button);
   }
 
-  return flag;
+  if(!flag){
+   e.preventDefault();
+  }
  });
 
  //テーブル内のフォーカスが外されたら
@@ -142,12 +144,27 @@ $(function(){
   var properties=["QuestionID","QuestionName","Author","version"];
   for(var i=0;i<properties.length;i++){
    flag=flag||((questionData[properties[i]]==void(0))||(!!questionData[properties[i]].match(/^\s*$/)));
-   console.log(flag);
   }
   return flag;
  }
 
- //debugMode();
+ //ショートカットキー
+ $(document).on("keydown",function(e){
+  if(e.ctrlKey){
+   switch(e.which){
+    case 83:
+     $("#questionEditorToolBoxSave").click();
+     break;
+    case 65:
+     $("#questionEditorToolBoxAdd").click();
+     console.log("add");
+     break;
+   }
+  }
+ });
+
+ $("#questionStatus>.myhead>button.mystatus").click();
+
 });
 
 function debugMode(){
