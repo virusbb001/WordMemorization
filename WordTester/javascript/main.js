@@ -18,6 +18,13 @@ $(function(){
   return false;
  }
 
+ $("#questionNumber").on("keydown",function(e){
+  if(e.which==13){
+   e.preventDefault();
+   $("#testStart").focus();
+  }
+ });
+
  //ファイルドロップ処理
  (function(droppable){
   var cancelEvent=function(event){
@@ -59,7 +66,6 @@ $(function(){
       progressWrapper.slideUp(1000,function(){
       });
       addQuestion(this.result,file.name);
-      console.log(file.type);
      };
      reader.onerror=function(e){
       progressDiv.removeClass("active").removeClass("progress-striped");
@@ -99,10 +105,10 @@ $(function(){
 });
 
 // データ定義 
-var WrongAnswer=function(id,number,wAnswer){
+var WrongAnswer=function(id,number){
  this.id=id;
  this.number=number;
- this.wAnswer=wAnswer;
+ this.counter=0;
 };
 
 //問題データ
@@ -140,6 +146,7 @@ function addQuestion(text,fileName){
   addedDataID.push(object.QuestionID);
   questionData[object.QuestionID]={};
   questionData[object.QuestionID].questions=new Array();
+  questionData[object.QuestionID].questionName=(object.QuestionName||object.QuestionID);
   for(var i=0;i<object.question.length;i++){
    questionData[object.QuestionID].questions.push(object.question[i]);
   }
@@ -153,7 +160,7 @@ function addQuestion(text,fileName){
  $(document.createElement("div")).addClass("checkbox").append(
    $(document.createElement("label")).append(
     $(document.createElement("input")).attr("type","checkbox").attr("value",object.QuestionID)
-    ).append(name)
+    ).append(name).append("("+object.question.length+"問)")
    ).appendTo("#questionIDList");
 }
 
@@ -161,15 +168,17 @@ function addQuestion(text,fileName){
 function createQuestionList(length,option){
  //問題の個数を取得する
  var allLen=0;
+ //length以下ならId
  var lenIdList=new Array();
  var idLenghtClass=function(id,length){
   this.id=id;
-  this.length;
+  this.length=length;
  };
 
  //実際のデータ(QuestionClass)
  var questionList=new Array();
 
+ //addに含まれている問題IDをlenIdListに
  for(var i=0;i<option.add.length;i++){
   var id=option.add[i];
   if(questionData[id]!==void(0)){
@@ -201,15 +210,15 @@ function createQuestionList(length,option){
   return ret;
  })(length,allLen);
 
+ //lenIdListのiを返す
  var getId=function(id){
-  var id;
-  for(var i=0;i<lenIdList;i++){
-   if(id<lenIdList.length){
+  var id=0;
+  for(var i=0;i<lenIdList.length;i++){
+   if(id<lenIdList[i].length){
     id=i;
-    break;
    }
   }
-  return i;
+  return id;
  };
  for(var i=0;i<qIdList.length;i++){
   var id=getId(qIdList[i]);
@@ -234,9 +243,18 @@ var questionData=new Object();
 // 読み込んだデータ
 var addedDataID=new Array();
 
+//セーブするデータ
 var userData={
- wrongAnswerData:[]
+ userName:"",
+ wrongAnswerData:(new Array())
 };
+
+//実際にテスト時に使う物
+var testingData={
+ questionList:[],
+ questionCurrentNumber:0,
+ wrongAnswerList:[]
+}
 
 //開始時の関数
 function testStart(){
@@ -281,12 +299,6 @@ function makeAlert(messages){
  alert(messages);
 }
 
-var testingData={
- questionList:[],
- questionCurrentNumber:0,
- wrongAnswerList:[]
-}
-
 function displayQuestion(){
  var number=testingData.questionCurrentNumber;
  var data=testingData.questionList[number];
@@ -325,18 +337,18 @@ function testEnd(){
  var table=$("#testResult>table");
  var tbody=table.children("tbody");
  if(testingData.wrongAnswerList.length==0){
-  console.log("perfect");
   $("#testResultPerfect").css("display","block");
  }else{
   //tableを空に
-  tbody.remove("tr");
+  tbody.empty();
   //間違えた問題表示
   $.each(testingData.wrongAnswerList,function(index,object){
     var qIdData=testingData.questionList[object.number];
     console.log(qIdData);
     var qData=questionData[qIdData.id].questions[qIdData.number];
+    var qName=questionData[qIdData.id].questionName;
     var tableRow=$(document.createElement('tr')).append(
-     $(document.createElement('td')).text(qIdData.id)
+     $(document.createElement('td')).text(qName)
     ).append(
      $(document.createElement('td')).text(qIdData.number)
     ).append(
@@ -352,6 +364,7 @@ function testEnd(){
  $("#testResult").slideDown();
 }
 
+//終了から設定画面へ
 function testSettingShow(){
  $("#testResult").slideUp(function(){
    $("#testResult>table").css("display","none");
@@ -359,3 +372,4 @@ function testSettingShow(){
  });
  $("#testSetting").slideDown();
 }
+
