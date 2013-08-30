@@ -211,11 +211,12 @@ function createQuestionList(length,option){
  })(length,allLen);
 
  //lenIdListのiを返す
- var getId=function(id){
+ var getId=function(qNum){
   var id=0;
   for(var i=0;i<lenIdList.length;i++){
-   if(id<lenIdList[i].length){
+   if(qNum<lenIdList[i].length){
     id=i;
+    break;
    }
   }
   return id;

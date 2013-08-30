@@ -8,4 +8,7 @@
 * jquery
 * twitter bootstrap 3
 
+# 動作を保証するブラウザ #
+* Google Chrome (version>=29)
+
 環境に合わせてHTMLを書き換えてください

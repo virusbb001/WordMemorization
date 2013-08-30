@@ -29,8 +29,9 @@ $(function(){
   $(this).focus();
   var data=JSON.stringify(questionData);
   var blob=new Blob([data]);
-  var blobURL=URL.createObjectURL(blob);
-  var fileName=$("#FileName").val();
+  var url=webkitURL||URL;
+  var blobURL=url.createObjectURL(blob);
+  var fileName=($("#FileName").val()+".json");
   var flag=true;
   var messages="";
 
@@ -102,13 +103,19 @@ $(function(){
   parentElem.empty();
   parentElem.text(value);
  }).on("keydown",".editable>input",function(e){
+   //キーによる動作てk義
   var flag=true;
   var parentElem=$(this).parent();
 
   //Enter or Tab
   if(e.keyCode==13||e.keyCode==9){
    $(this).blur();
-   parentElem.next(".editable").click();
+   //Shift+Tabなら前へ
+   if(e.shiftKey&&e.keyCode==9){
+    parentElem.prev(".editable").click();
+   }else{
+    parentElem.next(".editable").click();
+   }
    flag=false;
   }
 
@@ -164,11 +171,10 @@ $(function(){
  });
 
  $("#questionStatus>.myhead>button.mystatus").click();
-
 });
 
 function debugMode(){
- $('#questionEditorToolBoxSave').removeAttr("download").attr("type","text/plain")
+ $('#questionEditorToolBoxSave').removeAttr("download").attr("type","text/plain");
 }
 
 var questionData={

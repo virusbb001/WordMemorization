@@ -1,0 +1,134 @@
+diff --git a/QuestionMaker/index.html b/QuestionMaker/index.html
+index e6541d9..ab57de0 100644
+--- a/QuestionMaker/index.html
++++ b/QuestionMaker/index.html
+@@ -26,7 +26,7 @@
+    <form class="form-horizontal" action="#">
+     <div class="form-group">
+      <label class="col-lg-2 col-md-2 control-label" for="FileName">File name</label>
+-     <div class="col-lg-8 col-md-8"><input id="FileName" class="form-control" type="text" placeholder="questionData.json" /></div>
++     <div class="col-lg-8 col-md-8 input-group"><input id="FileName" class="form-control" type="text" placeholder="questionData" /><span class="input-group-addon">.json</span></div>
+     </div>
+     <div class="form-group">
+      <label class="col-lg-2 col-md-2 control-label" for="QuestionID">Question Data ID</label>
+diff --git a/QuestionMaker/javascript/main.js b/QuestionMaker/javascript/main.js
+index 5da5b1e..feae6ca 100644
+--- a/QuestionMaker/javascript/main.js
++++ b/QuestionMaker/javascript/main.js
+@@ -29,8 +29,9 @@ $(function(){
+   $(this).focus();
+   var data=JSON.stringify(questionData);
+   var blob=new Blob([data]);
+-  var blobURL=URL.createObjectURL(blob);
+-  var fileName=$("#FileName").val();
++  var url=webkitURL||URL;
++  var blobURL=url.createObjectURL(blob);
++  var fileName=($("#FileName").val()+".json");
+   var flag=true;
+   var messages="";
+ 
+@@ -102,13 +103,19 @@ $(function(){
+   parentElem.empty();
+   parentElem.text(value);
+  }).on("keydown",".editable>input",function(e){
++   //キーによる動作てk義
+   var flag=true;
+   var parentElem=$(this).parent();
+ 
+   //Enter or Tab
+   if(e.keyCode==13||e.keyCode==9){
+    $(this).blur();
+-   parentElem.next(".editable").click();
++   //Shift+Tabなら前へ
++   if(e.shiftKey&&e.keyCode==9){
++    parentElem.prev(".editable").click();
++   }else{
++    parentElem.next(".editable").click();
++   }
+    flag=false;
+   }
+ 
+@@ -164,11 +171,10 @@ $(function(){
+  });
+ 
+  $("#questionStatus>.myhead>button.mystatus").click();
+-
+ });
+ 
+ function debugMode(){
+- $('#questionEditorToolBoxSave').removeAttr("download").attr("type","text/plain")
++ $('#questionEditorToolBoxSave').removeAttr("download").attr("type","text/plain");
+ }
+ 
+ var questionData={
+diff --git a/README.md b/README.md
+index cfb8a51..58e44b9 100644
+--- a/README.md
++++ b/README.md
+@@ -8,4 +8,7 @@
+ * jquery
+ * twitter bootstrap 3
+ 
++# 動作を保証するブラウザ #
++* Google Chrome (version>=29)
++
+ 環境に合わせてHTMLを書き換えてください
+diff --git a/WordTester/HowToUse.mdown b/WordTester/HowToUse.mdown
+index c7e15ec..aad979f 100644
+--- a/WordTester/HowToUse.mdown
++++ b/WordTester/HowToUse.mdown
+@@ -1,7 +1,11 @@
+ # 使い方 #
+ 
+-1. 問題ファイルを読み込みます
+-2. もしあればユーザデータを読み込みます
++
++## WordTester
++
++0. WordTester/index.htmlを開きます
++1. Helpボタンを押してHelpを読みます.
++2. 問題ファイルを読み込みます
+ 3. 開始します
+ 4. 全問不正解
+ 5. たのしい！！✌('ω'✌ )三✌('ω')✌三( ✌'ω')✌
+diff --git a/WordTester/index.html b/WordTester/index.html
+index 8116a84..6061725 100644
+--- a/WordTester/index.html
++++ b/WordTester/index.html
+@@ -13,7 +13,7 @@
+ <body>
+ <!-- ツールバー -->
+ <div id="toolBar">
+- <button type="button" id="userDataLoad" class="btn btn-default">Load</button>
++ <button type="button" id="userDataLoad" class="btn btn-default" disabled="disabled">Load</button>
+  <a id="userDataSave" class="btn btn-default disabled" href="" download="" type="application/json">Save</a>
+  <button type="button" id="userDataDelete" class="btn btn-danger" disabled="disabled">Data Delete</button>
+  <button class="btn btn-default" type="button" data-target="#helpModal" data-toggle="modal">help</button>
+@@ -53,7 +53,7 @@
+       <p>
+       結果画面では,もし1問以上間違えたら,間違えた問題を表にして表示します.
+       表は,右から問題データ名,問題データ番号,問題,正解,あなたの解答を表示します.
+-      もし1問も間違えなければ,"Perfect"と出力します.
++      もし1問も間違えなければ,"Perfect"と表示します.
+       OKボタンを押して問題設定画面へ戻ってください.
+       </p>
+      </section>
+diff --git a/WordTester/javascript/main.js b/WordTester/javascript/main.js
+index 85837d7..bb48216 100644
+--- a/WordTester/javascript/main.js
++++ b/WordTester/javascript/main.js
+@@ -211,11 +211,12 @@ function createQuestionList(length,option){
+  })(length,allLen);
+ 
+  //lenIdListのiを返す
+- var getId=function(id){
++ var getId=function(qNum){
+   var id=0;
+   for(var i=0;i<lenIdList.length;i++){
+-   if(id<lenIdList[i].length){
++   if(qNum<lenIdList[i].length){
+     id=i;
++    break;
+    }
+   }
+   return id;
