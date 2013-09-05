@@ -291,6 +291,9 @@ function testStart(){
  //間違っている問題のリストを空に
  testingData.wrongAnswerList.length=0;
 
+ //progressbarの設定
+ $("#answerProgress .progress .progress-bar").attr("aria-valuemax",testingData.questionList.length).attr("aria-valuenow",0).css('width',""+0+'%').text(""+0+"/"+testingData.questionList);
+
  $("#testSetting").slideUp();
  $("#testDisplay").slideDown();
  displayQuestion();
@@ -309,6 +312,9 @@ function displayQuestion(){
  $("#answer input").each(function(){
   $(this).val("");
  });
+ //progress表示
+ $("#answerProgress .progress .progress-bar").text(""+(number+1)+"/"+testingData.questionList.length).attr("aria-valuenow",(number+1)).css('width',""+((number+1)/testingData.questionList.length*100)+"%");
+
  //フォーカス
  $("#answer input").eq(0).focus();
 }
