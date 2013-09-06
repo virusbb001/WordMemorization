@@ -45,8 +45,8 @@ $(function(){
     //closure
     //readerのイベント設定
     (function(file,reader){
-     var progressSr=$("<span />").addClass("sr-only").text("0% Complete");
-     var progressBar=$("<div />").addClass("progress-bar").attr("role","progressbar").attr("aria-valuemin","0").attr("aria-valuemax","100").css("width","0%").append(progressSr);
+     var progressMessage=$("<span />").text("0% Complete");
+     var progressBar=$("<div />").addClass("progress-bar").attr("role","progressbar").attr("aria-valuemin","0").attr("aria-valuemax","100").css("width","0%").append(progressMessage);
      var progressDiv=$("<div />").addClass("progress").addClass("progress-striped").append(progressBar);
      var progressWrapper=$("<div />").text(file.name).append(progressDiv).css("display","none");
      reader.onloadstart=function(e){
