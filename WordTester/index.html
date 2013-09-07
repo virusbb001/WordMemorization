@@ -1,167 +1,145 @@
 <!DOCTYPE html>
 <html lang="ja">
-<head>
-<meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<title>title</title>
-<meta name="viewport" content="width=device-width,initial-scale=1.0" />
+ <head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+  <title>title</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
 
-<!-- CDN -->
-<!--
-<link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" media="all">
-<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-theme.min.css">
--->
-<!-- /CDN -->
-
-<!-- local -->
-<link rel="stylesheet" href="/~virus/lib/bootstrap/css/bootstrap.min.css" media="screen" />
-<!-- local -->
-
-<link rel="stylesheet" type="text/css" href="./css/index.css" media="all" />
-<!-- CDN -->
-<!--
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
--->
-<!-- /CDN -->
-
-<!-- local -->
-<script src="/~virus/lib/jquery.js" type="text/javascript" charset="utf-8"></script>
-<script src="/~virus/lib/bootstrap/js/bootstrap.min.js" type="text/javascript" charset="utf-8"></script>
-<!-- local -->
-
-<script type="text/javascript" src="./javascript/main.js"></script>
-</head>
-<body>
-<!-- ツールバー -->
-<div id="toolBar">
- <button type="button" id="userDataLoad" class="btn btn-default" disabled="disabled">Load</button>
- <a id="userDataSave" class="btn btn-default disabled" href="" download="" type="application/json">Save</a>
- <button type="button" id="userDataDelete" class="btn btn-danger" disabled="disabled">Data Delete</button>
- <button class="btn btn-default" type="button" data-target="#helpModal" data-toggle="modal">help</button>
- <p class="text-muted">ユーザーに関するデータは通常ブラウザに保存されます<br />他のPCやブラウザとデータを一緒に使いたい場合にお使いください</p>
-</div>
-
-<div id="helpModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
- <div class="modal-dialog">
-  <div class="modal-content">
-   <div class="modal-header">
-    <button class="close" type="button" data-dismiss="modal" aria-hidden="true">&times;</button>
-    <h4>Help</h4>
-   </div>
-   <div class="modal-body">
-    簡単に操作説明をさせていただきます.
-    <article>
-     <section>
-      <h4>問題設定画面について</h4>
-      <p>
-      まず,お手元の問題データを"ここにファイルをドロップして..."と表示している場所にドロップしてください.そうすると問題数の入力欄の下に問題データ名とチェックボックスが表示されます.
-      チェックボックスをonにするとその問題データから問題が出題されます.
-      出題する問題データを選択したら上の問題数の入力欄に出題させる問題数を入力してください.
-      その時,出題させる問題データのデータ数の合計を超えないようにしてください.
-      問題データのデータ数は問題名の隣に(N問)という形で書かれています.
-      設定を終えたらSTARTと書かれたボタンをクリックしてください.
-      </p>
-     </section>
-     <section>
-      <h4>問題画面</h4>
-      <p>
-      STARTボタンを押すと、問題と解答用の入力欄が表示されます.入力欄に解答を入力し,Enterキーを押して次へ進めます.指定した問題数繰り返して解答を入力しEnterキーを押してください.
-      最後の問題でEnterキーを押すと,結果画面が表示されます.
-      </p>
-     </section>
-     <section>
-      <h4>結果画面</h4>
-      <p>
-      結果画面では,もし1問以上間違えたら,間違えた問題を表にして表示します.
-      表は,右から問題データ名,問題データ番号,問題,正解,あなたの解答を表示します.
-      もし1問も間違えなければ,"Perfect"と表示します.
-      OKボタンを押して問題設定画面へ戻ってください.
-      </p>
-     </section>
-
-     <section>
-      <h4>保存するデータについて</h4>
-      <p>ごめんなさい実装していません</p>
-     </section>
-    </article>
-   </div>
-   <div class="modal-footer">
-    <button class="btn-default btn" data-dismiss="modal" type="button">Close</button>
-   </div>
+  <link rel="stylesheet" type="text/css" href="./css/index.css" media="all" />
+  <script src="./javascript/cdn.js"></script>
+  <script src="./javascript/load.js"></script>
+ </head>
+ <body>
+  <!-- ツールバー -->
+  <div id="toolBar">
+   <button type="button" id="userDataLoad" class="btn btn-default" disabled="disabled">Load</button>
+   <a id="userDataSave" class="btn btn-default disabled" href="" download="" type="application/json">Save</a>
+   <button type="button" id="userDataDelete" class="btn btn-danger" disabled="disabled">Data Delete</button>
+   <button class="btn btn-default" type="button" data-target="#helpModal" data-toggle="modal">help</button>
+   <p class="text-muted">ユーザーに関するデータは通常ブラウザに保存されます<br />他のPCやブラウザとデータを一緒に使いたい場合にお使いください</p>
   </div>
- </div>
-</div>
 
-<!-- テスト画面本体 -->
-<div id="display" class="container">
- <!-- 問題設定画面 -->
- <div id="testSetting">
-  <form class="form-horizontal" action="#">
-   <div class="form-group">
-    <label class="col-lg-2 col-md-2 control-label" for="questionNumber">問題数</label>
-    <div class="col-lg-8 col-md-8">
-     <input id="questionNumber" class="form-control" type="number" placeholder="10" min="1" />
+  <div id="helpModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+   <div class="modal-dialog">
+    <div class="modal-content">
+     <div class="modal-header">
+      <button class="close" type="button" data-dismiss="modal" aria-hidden="true">&times;</button>
+      <h4>Help</h4>
+     </div>
+     <div class="modal-body">
+      簡単に操作説明をさせていただきます.
+      <article>
+       <section>
+        <h4>問題設定画面について</h4>
+        <p>
+         まず,お手元の問題データを"ここにファイルをドロップして..."と表示している場所にドロップしてください.そうすると問題数の入力欄の下に問題データ名とチェックボックスが表示されます.
+         チェックボックスをonにするとその問題データから問題が出題されます.
+         出題する問題データを選択したら上の問題数の入力欄に出題させる問題数を入力してください.
+         その時,出題させる問題データのデータ数の合計を超えないようにしてください.
+         問題データのデータ数は問題名の隣に(N問)という形で書かれています.
+         設定を終えたらSTARTと書かれたボタンをクリックしてください.
+        </p>
+       </section>
+       <section>
+        <h4>問題画面</h4>
+        <p>
+         STARTボタンを押すと、問題と解答用の入力欄が表示されます.入力欄に解答を入力し,Enterキーを押して次へ進めます.指定した問題数繰り返して解答を入力しEnterキーを押してください.
+         最後の問題でEnterキーを押すと,結果画面が表示されます.
+        </p>
+       </section>
+       <section>
+        <h4>結果画面</h4>
+        <p>
+         結果画面では,もし1問以上間違えたら,間違えた問題を表にして表示します.
+         表は,右から問題データ名,問題データ番号,問題,正解,あなたの解答を表示します.
+         もし1問も間違えなければ,"Perfect"と表示します.
+         OKボタンを押して問題設定画面へ戻ってください.
+        </p>
+       </section>
+
+       <section>
+        <h4>保存するデータについて</h4>
+        <p>ごめんなさい実装していません</p>
+       </section>
+      </article>
+     </div>
+     <div class="modal-footer">
+      <button class="btn-default btn" data-dismiss="modal" type="button">Close</button>
+     </div>
     </div>
    </div>
-   <div id="questionIDList">
+  </div>
+
+  <!-- テスト画面本体 -->
+  <div id="display" class="container">
+   <!-- 問題設定画面 -->
+   <div id="testSetting">
+    <form class="form-horizontal" action="#">
+     <div class="form-group">
+      <label class="col-lg-2 col-md-2 control-label" for="questionNumber">問題数</label>
+      <div class="col-lg-8 col-md-8">
+       <input id="questionNumber" class="form-control" type="number" placeholder="10" min="1" />
+      </div>
+     </div>
+     <div id="questionIDList">
+     </div>
+     <button id="testStart" class="btn btn-primary" type="button">START</button>
+    </form>
+    <!-- ファイル読込 -->
+    <div id="FileDropArea">
+     <div class="myhead">ファイル読込<button type="button" class="btn btn-default mystatus">show</button></div>
+     <div class="mybody" id="FileDropBox">ここにファイルをドロップして各種データを読み込んで下さい</div>
+    </div>
+    <!-- ファイル読み込み状況 -->
+    <div id="FileReadProgress">
+    </div>
    </div>
-   <button id="testStart" class="btn btn-primary" type="button">START</button>
-  </form>
-  <!-- ファイル読込 -->
-  <div id="FileDropArea">
-   <div class="myhead">ファイル読込<button type="button" class="btn btn-default mystatus">show</button></div>
-   <div class="mybody" id="FileDropBox">ここにファイルをドロップして各種データを読み込んで下さい</div>
-  </div>
-  <!-- ファイル読み込み状況 -->
-  <div id="FileReadProgress">
-  </div>
- </div>
- <!-- 問題画面 -->
- <div id="testDisplay">
-  <p id="question">
-  </p>
-  <form action="#" class="form-horizontal">
-   <div id="answer" class="form-group">
-    <span class="col-lg-2 col-md-2 control-label">解答</span>
-    <div class="col-lg-10 col-md-10">
-     <!-- FIXME -->
-     <div class="row">
-      <div class="col-lg-2 col-md-2">
-       <input class="form-control" type="text" />
+   <!-- 問題画面 -->
+   <div id="testDisplay">
+    <p id="question">
+    </p>
+    <form action="#" class="form-horizontal">
+     <div id="answer" class="form-group">
+      <span class="col-lg-2 col-md-2 control-label">解答</span>
+      <div class="col-lg-10 col-md-10">
+       <!-- FIXME -->
+       <div class="row">
+        <div class="col-lg-2 col-md-2">
+         <input class="form-control" type="text" />
+        </div>
+       </div>
+      </div>
+     </div>
+    </form>
+
+    <div id="answerProgress">
+     <div class="progress">
+      <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="0" aria-valuenow="0">
+       Please wait...
       </div>
      </div>
     </div>
    </div>
-  </form>
-
-  <div id="answerProgress">
-   <div class="progress">
-    <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="0" aria-valuenow="0">
-     Please wait...
+   <!-- 最終結果表示 -->
+   <div id="testResult">
+    <div id="testResultPerfect">
+     Perfect.
     </div>
+    <table class="table">
+     <thead>
+      <tr>
+       <th>問題データID</th>
+       <th>番号</th>
+       <th>問題文</th>
+       <th>正解</th>
+       <th>解答</th>
+      </tr>
+     </thead>
+     <tbody>
+     </tbody>
+    </table>
+    <button class="btn btn-primary">OK</button>
    </div>
   </div>
- </div>
- <!-- 最終結果表示 -->
- <div id="testResult">
-  <div id="testResultPerfect">
-   Perfect.
-  </div>
-  <table class="table">
-   <thead>
-    <tr>
-     <th>問題データID</th>
-     <th>番号</th>
-     <th>問題文</th>
-     <th>正解</th>
-     <th>解答</th>
-    </tr>
-   </thead>
-   <tbody>
-   </tbody>
-  </table>
-  <button class="btn btn-primary">OK</button>
- </div>
-</div>
-</body>
+ </body>
 </html>
