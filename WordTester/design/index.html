@@ -15,11 +15,78 @@
    <button type="button" id="userDataLoad" class="btn btn-default">Load</button>
    <a id="userDataSave" class="btn btn-default disabled" href="" download="" type="application/json">Save</a>
    <button type="button" id="userDataDelete" class="btn btn-danger" disabled="disabled">Data Delete</button>
+   <button class="btn btn-default" type="button" data-target="#helpModal" data-toggle="modal">help</button>
    <p class="text-muted">ユーザーに関するデータは通常ブラウザに保存されます<br />他のPCやブラウザとデータを一緒に使いたい場合にお使いください</p>
   </div>
 
-  <!-- ファイル読込モーダル -->
+  <!-- 外部問題ファイル読込モーダル -->
   <div id="fileLoadFromServerModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledBy="fileLoadFromServerModal" aria-hidden="true">
+   <div class="modal-dialog">
+    <div class="modal-content">
+     <div class="modal-header">
+      <button class="close" type="button" data-dismiss="modal" aria-hidden="true">&times;</button>
+      <h4>File Load</h4>
+     </div>
+     <div class="modal-body">
+     </div>
+     <div class="modal-footer">
+      <button class="btn-primary btn" data-dismiss="modal" type="button">Load Data</button>
+      <button class="btn-default btn" data-dismiss="modal" type="button">Close</button>
+     </div>
+    </div>
+   </div>
+  </div>
+
+  <!-- help表示 -->
+  <div id="helpModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+   <div class="modal-dialog">
+    <div class="modal-content">
+     <div class="modal-header">
+      <button class="close" type="button" data-dismiss="modal" aria-hidden="true">&times;</button>
+      <h4>Help</h4>
+     </div>
+     <div class="modal-body">
+      簡単に操作説明をさせていただきます.
+      <article>
+       <section>
+        <h4>問題設定画面について</h4>
+        <p>
+         まず,お手元の問題データを"ここにファイルをドロップして..."と表示している場所にドロップしてください.そうすると問題数の入力欄の下に問題データ名とチェックボックスが表示されます.
+         チェックボックスをonにするとその問題データから問題が出題されます.
+         出題する問題データを選択したら上の問題数の入力欄に出題させる問題数を入力してください.
+         その時,出題させる問題データのデータ数の合計を超えないようにしてください.
+         問題データのデータ数は問題名の隣に(N問)という形で書かれています.
+         設定を終えたらSTARTと書かれたボタンをクリックしてください.
+        </p>
+       </section>
+       <section>
+        <h4>問題画面</h4>
+        <p>
+         STARTボタンを押すと、問題と解答用の入力欄が表示されます.入力欄に解答を入力し,Enterキーを押して次へ進めます.指定した問題数繰り返して解答を入力しEnterキーを押してください.
+         最後の問題でEnterキーを押すと,結果画面が表示されます.
+        </p>
+       </section>
+       <section>
+        <h4>結果画面</h4>
+        <p>
+         結果画面では,もし1問以上間違えたら,間違えた問題を表にして表示します.
+         表は,右から問題データ名,問題データ番号,問題,正解,あなたの解答を表示します.
+         もし1問も間違えなければ,"Perfect"と表示します.
+         OKボタンを押して問題設定画面へ戻ってください.
+        </p>
+       </section>
+
+       <section>
+        <h4>保存するデータについて</h4>
+        <p>ごめんなさい実装していません</p>
+       </section>
+      </article>
+     </div>
+     <div class="modal-footer">
+      <button class="btn-default btn" data-dismiss="modal" type="button">Close</button>
+     </div>
+    </div>
+   </div>
   </div>
   <!-- テスト画面本体 -->
   <div id="display" class="container">
