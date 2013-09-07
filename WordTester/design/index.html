@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="ja">
+ <head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+  <title>title</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+  <link rel="stylesheet" href="/~virus/lib/bootstrap/css/bootstrap.min.css" media="screen" />
+  <link rel="stylesheet" type="text/css" href="./index.css" media="all" />
+  <script src="/~virus/lib/jquery.js" type="text/javascript" charset="utf-8"></script>
+  <script src="/~virus/lib/bootstrap/js/bootstrap.min.js" type="text/javascript" charset="utf-8"></script>
+ </head>
+ <body>
+  <!-- ツールバー -->
+  <div id="toolBar">
+   <button type="button" id="userDataLoad" class="btn btn-default">Load</button>
+   <a id="userDataSave" class="btn btn-default disabled" href="" download="" type="application/json">Save</a>
+   <button type="button" id="userDataDelete" class="btn btn-danger" disabled="disabled">Data Delete</button>
+   <p class="text-muted">ユーザーに関するデータは通常ブラウザに保存されます<br />他のPCやブラウザとデータを一緒に使いたい場合にお使いください</p>
+  </div>
+
+  <!-- ファイル読込モーダル -->
+  <div id="fileLoadFromServerModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledBy="fileLoadFromServerModal" aria-hidden="true">
+  </div>
+  <!-- テスト画面本体 -->
+  <div id="display" class="container">
+   <!-- 問題設定画面 -->
+   <div id="testSetting">
+    <form class="form-horizontal" action="#">
+     <div class="form-group">
+      <label class="col-lg-2 col-md-2 control-label" for="questionNumber">問題数</label>
+      <div class="col-lg-8 col-md-8">
+       <input id="questionNumber" class="form-control" type="number" placeholder="10" min="1" />
+      </div>
+     </div>
+     <fieldset>
+      <legend>QuestionDataSample <button class="btn btn-default">Dummy</button></legend>
+      <div class="mybody" style="display:block;">
+       <div class="checkbox">
+        <label>
+         <input type="checkbox" checked="checked"/>
+         この問題を追加する
+        </label>
+       </div>
+       <div class="form-group">
+        <label class="col-lg-2 col-md-2 control-label" for="">出題範囲</label>
+        <div class="col-lg-8 col-md-8">
+         <select id="RangeType" class="form-control">
+          <option disabled>過去に間違えた問題全て</option>
+          <option value="selectRange" disabled>範囲選択</option>
+          <option value="all" selected>全ての範囲</option>
+         </select>
+        </div>
+       </div>
+       <fieldset disabled="disabled">
+        <div id="RangeControlButtons">
+         <button type="button" class="btn btn-default">Add</button>
+        </div>
+        <div class="form-group">
+         <span class="control-label col-lg-2 col-md-2">範囲</span>
+         <div class="col-lg-6 col-md-6">
+          <div class="input-group">
+           <input class="form-control" type="number" />
+           <span class="input-group-addon">-</span>
+           <input class="form-control" type="number" />
+          </div>
+         </div>
+         <button class="btn btn-danger" type="button">
+          Delete
+         </button>
+        </div>
+       </fieldset>
+      </div>
+     </fieldset>
+     <button id="testStart" class="btn btn-default" type="button">START</button>
+    </form>
+    <!-- ファイル読込 -->
+    <div id="FileDropArea">
+     <div class="myhead">問題読込<button type="button" class="btn btn-default mystatus">show</button></div>
+     <div class="mybody" id="FileDropBox">Drop files here</div>
+    </div>
+    <!-- ファイル読み込み状況 -->
+    <div id="FileReadProgress">
+     <div>
+      File Name
+      <div class="progress progress-striped active">
+       <div class="progress-bar" role="progressbar" style="width: 50%">
+        50% Complete
+       </div>
+      </div>
+     </div>
+    </div>
+   </div>
+   <!-- 問題画面 -->
+   <div id="testDisplay">
+    <p id="question">
+     問題文
+    </p>
+    <form action="#" class="form-horizontal">
+     <div id="answer" class="form-group">
+      <span class="col-lg-2 col-md-2 control-label">解答</span>
+      <div class="col-lg-10 col-md-10">
+       <!-- FIXME -->
+       <div class="row">
+        <div class="col-lg-2 col-md-2">
+         <input class="form-control" type="text" />
+        </div>
+        <div class="col-lg-2 col-md-2">
+         <input class="form-control" type="text" />
+        </div>
+        <div class="col-lg-2 col-md-2">
+         <input class="form-control" type="text" />
+        </div>
+        <div class="col-lg-2 col-md-2">
+         <input class="form-control" type="text" />
+        </div>
+        <div class="col-lg-2 col-md-2">
+         <input class="form-control" type="text" />
+        </div>
+        <div class="col-lg-2 col-md-2">
+         <input class="form-control" type="text" />
+        </div>
+       </div>
+       <div class="row">
+        <div class="col-lg-2 col-md-2">
+         <input class="form-control" type="text" />
+        </div>
+        <div class="col-lg-2 col-md-2">
+         <input class="form-control" type="text" />
+        </div>
+        <div class="col-lg-2 col-md-2">
+         <input class="form-control" type="text" />
+        </div>
+        <div class="col-lg-2 col-md-2">
+         <input class="form-control" type="text" />
+        </div>
+        <div class="col-lg-2 col-md-2">
+         <input class="form-control" type="text" />
+        </div>
+        <div class="col-lg-2 col-md-2">
+         <input class="form-control" type="text" />
+        </div>
+       </div>
+      </div>
+     </div>
+    </form>
+
+    <div id="answerProgress">
+     <div class="progress progress-striped active">
+      <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50" style="width: 50%;">
+       <span>5/10</span>
+      </div>
+     </div>
+    </div>
+   </div>
+   <!-- 最終結果表示 -->
+   <div id="testResult">
+    <table class="table">
+     <thead>
+      <tr>
+       <th>問題データID</th>
+       <th>番号</th>
+       <th>問題文</th>
+       <th>正解</th>
+       <th>解答</th>
+      </tr>
+     </thead>
+     <tbody>
+      <tr>
+       <td>QuestionTestData</td>
+       <td>0</td>
+       <td>What is this?</td>
+       <td>pen</td>
+       <td>bucket</td>
+      </tr>
+     </tbody>
+    </table>
+   </div>
+  </div>
+ </body>
+</html>
