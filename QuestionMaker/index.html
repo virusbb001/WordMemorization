@@ -1,140 +1,140 @@
 <!DOCTYPE html>
 <html>
-<head>
-<meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<title>title</title>
-<meta name="viewport" content="width=device-width,initial-scale=1.0" />
-<!-- bootstrap css -->
-<link rel="stylesheet" type="text/css" href="/lib/bootstrap/css/bootstrap.min.css" media="all" />
+ <head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+  <title>title</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+  <!-- bootstrap css -->
+  <link rel="stylesheet" type="text/css" href="/lib/bootstrap/css/bootstrap.min.css" media="all" />
 
-<link rel="stylesheet" type="text/css" href="./css/index.css" media="all" />
-<!-- jquery -->
-<script type="text/javascript" src="/lib/jquery.js">
-</script>
-<!-- bootstrap -->
-<script type="text/javascript" src="/lib/bootstrap/js/bootstrap.min.js">
-</script>
+  <link rel="stylesheet" type="text/css" href="./css/index.css" media="all" />
+  <!-- jquery -->
+  <script type="text/javascript" src="/lib/jquery.js">
+  </script>
+  <!-- bootstrap -->
+  <script type="text/javascript" src="/lib/bootstrap/js/bootstrap.min.js">
+  </script>
 
-<script type="text/javascript" src="./javascript/main.js"></script>
-</head>
-<body>
-<div class="container">
- <!-- メタ情報 -->
- <div id="questionStatus">
-  <div class="myhead">Question Status <button class="mystatus btn btn-default">show</button></div>
-  <div class="mybody">
-   <form class="form-horizontal" action="#">
-    <div class="form-group">
-     <label class="col-lg-2 col-md-2 control-label" for="FileName">File name</label>
-     <div class="col-lg-8 col-md-8 input-group"><input id="FileName" class="form-control" type="text" placeholder="questionData" /><span class="input-group-addon">.json</span></div>
+  <script type="text/javascript" src="./javascript/main.js"></script>
+ </head>
+ <body>
+  <!-- ヘルプ -->
+  <div id="helpModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+   <div class="modal-dialog">
+    <div class="modal-content">
+     <div class="modal-header">
+      <button class="close" type="button" data-dismiss="modal" aria-hidden="true">&times;</button>
+      <h4 class="modal-title">Help</h4>
+     </div>
+     <div class="modal-body">
+      <article>
+       簡単に利用方法を説明させていただきます<br>
+       <section>
+        <h4>Question Status</h4>
+        <p>
+         Question Statusでは問題データの情報を入力してください.
+         入力してもらうのは以下の項目です.File name以外は空欄のままにしないでください.
+        </p>
+        <ul>
+         <li>File name(ファイル名)</li>
+         <li>Question Data ID(問題データ固有の文字列)</li>
+         <li>Question Data Name(実際に使用者に表示するデータ名)</li>
+         <li>Author Name(問題データ作成者の名前)</li>
+         <li>Version(問題データのバージョン)</li>
+        </ul>
+       </section>
+       <section>
+        <h4>並んでいるボタンについて</h4>
+        <p>
+         Question Statusの入力欄のすぐ下にはボタンが幾つか並んでいると思います.
+         このボタンはすぐ下の問題エディタ本体の操作に必要なものです.
+        </p>
+        <ul>
+         <li>Add(問題追加ボタン)</li>
+         <li>Delete(未実装)</li>
+         <li>Save(セーブボタン データをダウンロードします)</li>
+         <li>Help(ヘルプ)</li>
+        </ul>
+       </section>
+       <section>
+        <h4>エディタ</h4>
+        <p>
+         表で問題を作成します.すぐ上にあるボタンのうち,Addボタンで問題を追加します.
+         Addボタンを押すと,テーブルに行が追加されます.追加された行の中のセルのうち一つにフォーカスがあたった入力欄があると思います.そこで問題を入力してください.
+         この時点でフォーカスを外すと入力欄が消え,入力したものがセルに表示されます.
+         セルをクリックすると入力欄が再び現れます.
+         また,行のうちセルがどれか一つが空であればその行は赤くなります.
+         このままセーブできるのでご注意ください.
+         問題入力時にEnterキーあるいはTabキーを押すとそのまま解答を入力することが出来ます
+        </p>
+       </section>
+      </article>
+     </div>
+     <div class="modal-footer"><button class="btn-default btn" type="button" data-dismiss="modal">Close</button></div>
     </div>
-    <div class="form-group">
-     <label class="col-lg-2 col-md-2 control-label" for="QuestionID">Question Data ID</label>
-     <div class="col-lg-8 col-md-8"><input class="form-control" type="text" id="QuestionID" /></div>
-    </div>
-    <div class="form-group">
-     <label class="col-lg-2 col-md-2 control-label" for="QuestionName">Question Data Name</label>
-     <div class="col-lg-8 col-md-8"><input class="form-control" type="text" id="QuestionName"/></div>
-    </div>
-    <div class="form-group">
-     <label class="col-lg-2 col-md-2 control-label" for="Author"> Author Name </label>
-     <div class="col-lg-8 col-md-8"><input class="form-control" type="text" id="Author" /></div>
-    </div>
-    <div class="form-group">
-     <label class="col-lg-2 col-md-2 control-label" for="version">Version</label>
-     <div class="col-lg-8 col-md-8"><input class="form-control" type="text" id="version" /></div>
-    </div>
-   </form>
-  </div>
- </div>
-
- <!-- ヘルプ -->
- <div id="helpModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-   <div class="modal-content">
-    <div class="modal-header">
-     <button class="close" type="button" data-dismiss="modal" aria-hidden="true">&times;</button>
-     <h4 class="modal-title">Help</h4>
-    </div>
-    <div class="modal-body">
-     <article>
-      簡単に利用方法を説明させていただきます<br>
-      <section>
-       <h4>Question Status</h4>
-       <p>
-       Question Statusでは問題データの情報を入力してください.
-       入力してもらうのは以下の項目です.File name以外は空欄のままにしないでください.
-       </p>
-       <ul>
-        <li>File name(ファイル名)</li>
-        <li>Question Data ID(問題データ固有の文字列)</li>
-        <li>Question Data Name(実際に使用者に表示するデータ名)</li>
-        <li>Author Name(問題データ作成者の名前)</li>
-        <li>Version(問題データのバージョン)</li>
-       </ul>
-      </section>
-      <section>
-       <h4>並んでいるボタンについて</h4>
-       <p>
-       Question Statusの入力欄のすぐ下にはボタンが幾つか並んでいると思います.
-       このボタンはすぐ下の問題エディタ本体の操作に必要なものです.
-       </p>
-       <ul>
-        <li>Add(問題追加ボタン)</li>
-        <li>Delete(未実装)</li>
-        <li>Save(セーブボタン データをダウンロードします)</li>
-        <li>Help(ヘルプ)</li>
-       </ul>
-      </section>
-      <section>
-       <h4>エディタ</h4>
-       <p>
-       表で問題を作成します.すぐ上にあるボタンのうち,Addボタンで問題を追加します.
-       Addボタンを押すと,テーブルに行が追加されます.追加された行の中のセルのうち一つにフォーカスがあたった入力欄があると思います.そこで問題を入力してください.
-       この時点でフォーカスを外すと入力欄が消え,入力したものがセルに表示されます.
-       セルをクリックすると入力欄が再び現れます.
-       また,行のうちセルがどれか一つが空であればその行は赤くなります.
-       このままセーブできるのでご注意ください.
-       問題入力時にEnterキーあるいはTabキーを押すとそのまま解答を入力することが出来ます
-       </p>
-      </section>
-     </article>
-    </div>
-    <div class="modal-footer"><button class="btn-default btn" type="button" data-dismiss="modal">Close</button></div>
    </div>
   </div>
- </div>
+  <div class="container">
+   <!-- メタ情報 -->
+   <div id="questionStatus">
+    <div class="myhead">Question Status <button class="mystatus btn btn-default">show</button></div>
+    <div class="mybody">
+     <form class="form-horizontal" action="#">
+      <div class="form-group">
+       <label class="col-lg-2 col-md-2 control-label" for="FileName">File name</label>
+       <div class="col-lg-8 col-md-8 input-group"><input id="FileName" class="form-control" type="text" placeholder="questionData" /><span class="input-group-addon">.json</span></div>
+      </div>
+      <div class="form-group">
+       <label class="col-lg-2 col-md-2 control-label" for="QuestionID">Question Data ID</label>
+       <div class="col-lg-8 col-md-8"><input class="form-control" type="text" id="QuestionID" /></div>
+      </div>
+      <div class="form-group">
+       <label class="col-lg-2 col-md-2 control-label" for="QuestionName">Question Data Name</label>
+       <div class="col-lg-8 col-md-8"><input class="form-control" type="text" id="QuestionName"/></div>
+      </div>
+      <div class="form-group">
+       <label class="col-lg-2 col-md-2 control-label" for="Author"> Author Name </label>
+       <div class="col-lg-8 col-md-8"><input class="form-control" type="text" id="Author" /></div>
+      </div>
+      <div class="form-group">
+       <label class="col-lg-2 col-md-2 control-label" for="version">Version</label>
+       <div class="col-lg-8 col-md-8"><input class="form-control" type="text" id="version" /></div>
+      </div>
+     </form>
+    </div>
+   </div>
 
- <!-- エディタ本体 -->
- <div id="questionEditor">
-  <!-- ツールバー的な -->
-  <div id="questionEditorToolBox">
-   <button class="btn btn-default" id="questionEditorToolBoxAdd">Add</button>
-   <button class="btn btn-default" id="questionEditorToolBoxDelete" disabled="disabled">Delete</button>
-   <a id="questionEditorToolBoxSave" class="btn btn-default" type="application/json" target="_blank" download="">Save</a>
-   <button class="btn btn-default" type="button" data-toggle="modal" data-target="#helpModal">Help</button>
+
+   <!-- エディタ本体 -->
+   <div id="questionEditor">
+    <!-- ツールバー的な -->
+    <div id="questionEditorToolBox">
+     <button class="btn btn-default" id="questionEditorToolBoxAdd">Add</button>
+     <button class="btn btn-default" id="questionEditorToolBoxDelete" disabled="disabled">Delete</button>
+     <a id="questionEditorToolBoxSave" class="btn btn-default" type="application/json" target="_blank" download="">Save</a>
+     <button class="btn btn-default" type="button" data-toggle="modal" data-target="#helpModal">Help</button>
+    </div>
+    <table class="table table-bordered">
+     <thead>
+      <tr>
+       <th>ID</th>
+       <th>問題</th>
+       <th>答え</th>
+      </tr>
+     </thead>
+     <tbody>
+     </tbody>
+    </table>
+   </div>
+
+   <!-- ファイル読込 -->
+   <!--
+   <div id="FileDropArea">
+    <div class="myhead">FILE LOAD <button class="btn btn-default mystatus" disabled="disabled">show</button></div>
+    <div class="mybody" id="FileDropBox">Drop files here</div>
+   </div>
+   -->
   </div>
-  <table class="table table-bordered">
-   <thead>
-    <tr>
-     <th>ID</th>
-     <th>問題</th>
-     <th>答え</th>
-    </tr>
-   </thead>
-   <tbody>
-   </tbody>
-  </table>
- </div>
-
- <!-- ファイル読込 -->
- <!--
-<div id="FileDropArea">
- <div class="myhead">FILE LOAD <button class="btn btn-default mystatus" disabled="disabled">show</button></div>
- <div class="mybody" id="FileDropBox">Drop files here</div>
-</div>
--->
-</div>
-</body>
+ </body>
 </html>
 
