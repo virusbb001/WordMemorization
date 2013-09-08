@@ -18,6 +18,19 @@
   <script type="text/javascript" src="../javascript/main.js"></script>
  </head>
  <body>
+  <!-- ツールバー -->
+  <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+   <div class="navbar-header">
+    <div class="navbar-brand">
+     ToolBar
+    </div>
+   </div>
+   <ul class="nav navbar-nav">
+    <li><button class="btn btn-default navbar-btn" type="button" id="questionEditorToolBoxAdd">Add</button></li>
+     <li><a id="questionEditorToolBoxSave" type="application/json" target="_blank" download="">Save</a> </li>
+
+   </ul>
+  </nav>
   <!-- ヘルプ -->
   <div id="helpModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
    <div class="modal-dialog">
@@ -74,7 +87,7 @@
     </div>
    </div>
   </div>
-  <div class="container">
+  <div class="container" id="editor">
    <!-- メタ情報 -->
    <div id="questionStatus">
     <div class="myhead">Question Status <button class="mystatus btn btn-default">show</button></div>
@@ -103,50 +116,31 @@
      </form>
     </div>
    </div>
-
-
    <!-- エディタ本体 -->
    <div id="questionEditor">
     <!-- ツールバー的な -->
     <div id="questionEditorToolBox">
-     <button class="btn btn-default" id="questionEditorToolBoxAdd">Add</button>
-     <button class="btn btn-default" id="questionEditorToolBoxDelete" disabled="disabled">Delete</button>
      <a id="questionEditorToolBoxSave" class="btn btn-default" type="application/json" target="_blank" download="">Save</a>
      <button class="btn btn-default" type="button" data-toggle="modal" data-target="#helpModal">Help</button>
     </div>
-    <table class="table table-bordered">
+    <table class="table table-bordered table-condensed">
      <thead>
       <tr>
        <th>ID</th>
        <th>問題</th>
        <th>答え</th>
+       <th>---</th>
       </tr>
      </thead>
      <tbody>
       <tr>
-       <td><div class="checkbox"><label><input type="checkbox" />1</label></div></td>
-       <td>Q1</td>
-       <td>A1</td>
-      </tr>
-      <tr>
-       <td><label><input type="checkbox" />2</label></td>
-       <td>Q2</td>
-       <td>A2</td>
-      </tr>
-      <tr>
-       <td><label><input type="checkbox" />3</label></td>
-       <td>Q3</td>
-       <td>A3</td>
-      </tr>
-      <tr>
-       <td><label><input type="checkbox" />4</label></td>
-       <td>Q4</td>
-       <td>A4</td>
-      </tr>
-      <tr>
-       <td><label><input type="checkbox" />5</label></td>
-       <td>Q5</td>
-       <td>A5</td>
+       <td>0</td>
+       <td>Q0</td>
+       <td>A0</td>
+       <td>
+        <button class="btn btn-default deleteQuestion">Delete</button>
+        <button class="btn btn-default advancedSettingQuestion">Advanced Setting</button>
+       </td>
       </tr>
      </tbody>
     </table>

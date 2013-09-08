@@ -19,13 +19,14 @@ $(function(){
     var question=$('<td></td>').addClass("editable");
     var answer=$('<td></td>').addClass("editable");
     var id=$(document.createElement('td')).append(
-     $(document.createElement('div')).addClass("checkbox").append(
-      $(document.createElement("label")).append(
-       $(document.createElement("input")).attr("type","checkbox")
-      ).append(editorTableBody.children("tr").length)
-     )
+     editorTableBody.children("tr").length
     );
-    contentTr.append(id).append(question).append(answer);
+    var buttons=$(document.createElement('td')).append(
+     $(document.createElement('button')).addClass("btn").addClass("btn-danger").addClass("deleteQuestion").append("Delete")
+    ).append(
+     $(document.createElement('button')).addClass("btn").addClass("btn-default").addClass("advancedSettingQuestion").append("Advanced Setting")
+    );
+    contentTr.append(id).append(question).append(answer).append(buttons);
     editorTableBody.append(contentTr);
     question.click();
   });
@@ -61,7 +62,7 @@ $(function(){
     if(messages!=""){
      var button=$("<button />").attr("data-dismiss","alert").attr("aria-hidden","true").html("&times;").addClass("close");
      console.log(button);
-     var alertDOM=$("<div />").text(messages).addClass("alert-dismissable").addClass("alert").addClass("alert-danger").addClass("fade").addClass("in").prependTo("body").prepend(button);
+     var alertDOM=$("<div />").text(messages).addClass("alert-dismissable").addClass("alert").addClass("alert-danger").addClass("fade").addClass("in").prependTo("div#editor").prepend(button);
     }
 
     if(!flag){
@@ -171,10 +172,18 @@ $(function(){
       break;
       case 65:
       $("#questionEditorToolBoxAdd").click();
-      console.log("add");
       break;
      }
     }
+  });
+
+  // 要素削除
+  $("#questionEditor>table").on("click","button.deleteQuestion",function(e){
+    var $this=$(this);
+    var thisTr=$this.closest("tr");
+    var tbody=thisTr.parent("tbody");
+    var index=tbody.children("tr").index(thisTr);
+    deleteQuestion(tbody,index);
   });
 
   $("#questionStatus>.myhead>button.mystatus").click();
@@ -182,6 +191,16 @@ $(function(){
 
 function debugMode(){
  $('#questionEditorToolBoxSave').removeAttr("download").attr("type","text/plain");
+}
+
+function deleteQuestion(tbody,index){
+ var list=tbody.children("tr");
+ var target=list.eq(index);
+ // 更新
+ for (i=index+1;i<list.length;i++){
+  list.eq(i).children("td").eq(0).text(i-1);
+ }
+ target.remove();
 }
 
 var questionData={
