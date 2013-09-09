@@ -186,6 +186,20 @@ $(function(){
     deleteQuestion(tbody,index);
   });
 
+  // 詳細設定
+  $("#questionEditor>table").on("click","button.advancedSettingQuestion",function(e){
+    var $this=$(this);
+    var thisTr=$this.closest("tr");
+    var tbody=thisTr.parent("tbody");
+    var index=tbody.children("tr").index(thisTr);
+    var modal=$("#questionAdvancedSetting");
+    var info=modal.find(".modal-body").children(".info");
+    // 問題設定
+    info.children(".id").text("ID:"+index);
+    info.children(".question").text("問題文:"+thisTr.children("td").eq(1).text());
+    modal.modal();
+  });
+
   $("#questionStatus>.myhead>button.mystatus").click();
 });
 

@@ -88,6 +88,33 @@
     </div>
    </div>
   </div>
+  <!-- 詳細設定 -->
+  <div id="questionAdvancedSetting" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="advancedSettingModalLabel" aria-hidden="true">
+   <div class="modal-dialog">
+    <div class="modal-content">
+     <div class="modal-head">
+      <button class="close" type="button" data-dismiss="modal" aria-hidden="true">&times;</button>
+      <h4 class="modal-title">詳細設定</h4>
+     </div>
+     <div class="modal-body">
+      <div class="info">
+       <div class="id">ID:-1</div>
+       <div class="question">問題文</div>
+       <div class="answerType">
+        <div class="radio"><label><input type="radio" name="answerType" value="Words" />単語</label></div>
+        <div class="radio"><label><input type="radio" name="answerType" value="Sentence" />文</label></div>
+        <p class="help-block">単語:単語形式で解答 文:文で解答</p>
+        <p class="help-block">単語形式で回答させる場合正解のデータはスペース区切りでお願いします</p>
+       </div>
+      </div>
+     </div>
+     <div class="modal-footer">
+      <button class="btn btn-primary" type="button" data-dismiss="modal">設定</button>
+      <button class="btn btn-default" type="button" data-dismiss="modal">キャンセル</button>
+     </div>
+    </div>
+   </div>
+  </div>
   <div class="container" id="editor">
    <!-- メタ情報 -->
    <div id="questionStatus">
@@ -119,9 +146,6 @@
    </div>
    <!-- エディタ本体 -->
    <div id="questionEditor">
-    <!-- ツールバー的な -->
-    <div id="questionEditorToolBox">
-    </div>
     <table class="table table-bordered table-condensed">
      <thead>
       <tr>
