@@ -29,26 +29,32 @@
      <div class="modal-body">
       <!-- 一つのサーバあたり -->
       <div>
-       <div class="fileListTitle">
+       <div class="fileListTitle myhead">
         <button class="btn btn-default" type="button">Reload</button>
-        <button type="button" class="btn btn-default">Close</button>
-        <span>Hello.dip.jp</span>
+        <button type="button" class="btn btn-default mystatus">Show</button>
+        <div>Hello (Hello.dip.jp)</div>
        </div>
-       <div>Hello</div>
-       <div>Hello</div>
-       <div>Hello</div>
-       <div>Hello</div>
+       <div class="mybody">
+        <div><div class="checkbox"><label> <input type="checkbox" />Hello</label></div></div>
+        <div><div class="checkbox"><label> <input type="checkbox" />Hello</label></div></div>
+        <div><div class="checkbox"><label> <input type="checkbox" />Hello</label></div></div>
+        <div><div class="checkbox"><label> <input type="checkbox" />Hello</label></div></div>
+        <div><div class="checkbox"><label> <input type="checkbox" />Hello</label></div></div>
+       </div>
       </div>
       <div>
-       <div class="fileListTitle">
+       <div class="fileListTitle myhead">
         <button class="btn btn-default" type="button">Reload</button>
-        <button type="button" class="btn btn-default">Close</button>
-        <span>Hello.dip.jp</span>
+        <button type="button" class="btn btn-default mystatus">Show</button>
+        <div>Hello (Hello.dip.jp)</div>
        </div>
-       <div>Hello</div>
-       <div>Hello</div>
-       <div>Hello</div>
-       <div>Hello</div>
+       <div class="mybody">
+        <div><div class="checkbox"><label> <input type="checkbox" />Hello</label></div></div>
+        <div><div class="checkbox"><label> <input type="checkbox" />Hello</label></div></div>
+        <div><div class="checkbox"><label> <input type="checkbox" />Hello</label></div></div>
+        <div><div class="checkbox"><label> <input type="checkbox" />Hello</label></div></div>
+        <div><div class="checkbox"><label> <input type="checkbox" />Hello</label></div></div>
+       </div>
       </div>
      </div>
      <div class="modal-footer">
@@ -221,33 +227,34 @@
      </div>
     </div>
    </div>
-  </div>
-  <!-- 最終結果表示 -->
-  <div id="testResult">
-   <div id="testResultPerfect">
-    Perfect.
+   <!-- 最終結果表示 -->
+   <div id="testResult">
+    <div id="testResultPerfect">
+     Perfect.
+    </div>
+    <table class="table">
+     <thead>
+      <tr>
+       <th>問題データID</th>
+       <th>番号</th>
+       <th>問題文</th>
+       <th>正解</th>
+       <th>解答</th>
+      </tr>
+     </thead>
+     <tbody>
+      <tr class="forDebug">
+       <td>QuestionTestData</td>
+       <td>0</td>
+       <td>What is this?</td>
+       <td>pen</td>
+       <td>bucket</td>
+      </tr>
+     </tbody>
+    </table>
+    <button class="btn btn-primary">OK</button>
    </div>
-   <table class="table">
-    <thead>
-     <tr>
-      <th>問題データID</th>
-      <th>番号</th>
-      <th>問題文</th>
-      <th>正解</th>
-      <th>解答</th>
-     </tr>
-    </thead>
-    <tbody>
-     <tr class="forDebug">
-      <td>QuestionTestData</td>
-      <td>0</td>
-      <td>What is this?</td>
-      <td>pen</td>
-      <td>bucket</td>
-     </tr>
-    </tbody>
-   </table>
-   <button class="btn btn-primary">OK</button>
+
   </div>
  </body>
 </html>
