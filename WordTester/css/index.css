@@ -21,3 +21,23 @@
 .mybody{
  display: none;
 }
+
+#fileLoadFromServerModal .modal-body>div>div.fileListTitle{
+ background-color:#dddddd;
+ overflow: auto;
+ width: 100%;
+}
+
+
+#fileLoadFromServerModal .modal-body>div>div.fileListTitle>button{
+ float: right;
+}
+
+#fileLoadFromServerModal .modal-body>div>div.fileListTitle>div{
+ clear: both;
+}
+
+/* スタイル確認用 */
+.forDebug{
+ display:none;
+}

@@ -101,7 +101,7 @@ $(function(){
  });
 
  //File読込欄の表示
- $("#FileDropArea>.myhead>button").click();
+ $("#FileDropArea>.myhead>button.mystatus").click();
 });
 
 // データ定義 
