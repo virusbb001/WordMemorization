@@ -216,6 +216,64 @@ $(function(){
     questionData.question[id].answerType=value;
   });
 
+  //ドラッグアンドドロップでデータ読込(追加)
+  (function(droppable){
+    var cancelEvent=function(event){
+     event.preventDefault();
+     event.stopPropagation();
+     return false;
+    };
+    droppable.bind("dragenter",cancelEvent);
+    droppable.bind("dragover",cancelEvent);
+
+    //このeはjquery独自オブジェクト originalEventでもとのオブジェクトを取得できる
+    //ドロップされたファイル一覧を取得する
+    var handlerDroppedFile=function(e){
+     var files=e.originalEvent.dataTransfer.files;
+     for(var i=0;i<files.length;i++){
+      var f=files[i];
+      var reader=new FileReader();
+      //closure
+      //readerのイベント設定
+      (function(file,reader){
+        var progressMessage=$("<span />").text("0% Complete");
+        var progressBar=$("<div />").addClass("progress-bar").attr("role","progressbar").attr("aria-valuemin","0").attr("aria-valuemax","100").css("width","0%").append(progressMessage);
+        var progressDiv=$("<div />").addClass("progress").addClass("progress-striped").append(progressBar);
+        var progressWrapper=$("<div />").text(file.name).append(progressDiv).css("display","none");
+        reader.onloadstart=function(e){
+         progressWrapper.appendTo($("#FileReadProgress")).slideDown();
+         progressDiv.addClass("active");
+        };
+        reader.onprogress=function(e){
+         if(e.lengthComputable){
+          var percentLoaded=Math.round((e.loaded/e.total)*100);
+          progressBar.attr("aria-valuenow",percentLoaded).css("width",percentLoaded+"%");
+          progressMessage.text(percentLoaded+"% Complete");
+         }
+        };
+        reader.onload=function(e){
+         progressDiv.removeClass("active").removeClass("progress-striped");
+         progressBar.addClass("progress-bar-success");
+         progressWrapper.slideUp(1000,function(){
+         });
+         addQuestion(this.result,file.name);
+        };
+        reader.onerror=function(e){
+         progressDiv.removeClass("active").removeClass("progress-striped");
+         progressBar.addClass("progress-bar-danger");
+         alert("エラーが発生しました");
+         console.log(e);
+        };
+      })(f,reader);
+      reader.readAsText(f);
+     }
+     //デフォルトの挙動をキャンセル
+     cancelEvent(event);
+     return false;
+    };
+    droppable.bind("drop",handlerDroppedFile);
+  })($(document));
+
   $("#questionStatus>.myhead>button.mystatus").click();
 });
 
@@ -231,6 +289,41 @@ function deleteQuestion(tbody,index){
   list.eq(i).children("td").eq(0).text(i-1);
  }
  target.remove();
+}
+
+function addQuestion(data,fileName){
+ data=JSON.parse(data);
+ var meta=["QuestionID","QuestionName","Author","version"];
+ //メタデータ追加
+ for(var i=0;i<meta.length;i++){
+  if(questionData[meta[i]]!=data[meta[i]]){
+   questionData[meta[i]]+=data[meta[i]];
+   $("#"+meta[i]).val(questionData[meta[i]]);
+  }
+ }
+
+ //データ追加
+ for(var i=0;i<data.question.length;i++){
+  addQuestionData(data.question[i]);
+ }
+}
+
+function addQuestionData(loadedQuestionData){
+ var editorTableBody=$("#questionEditor>table>tbody");
+ var contentTr=$('<tr></tr>');
+ var question=$('<td></td>').addClass("editable").text(""+loadedQuestionData.questionSentence);
+ var answer=$('<td></td>').addClass("editable").text(""+loadedQuestionData.answer);
+ var id=editorTableBody.children("tr").length;
+ var idTr=$(document.createElement('td')).append(id);
+ var buttons=$(document.createElement('td')).append(
+  $(document.createElement('button')).addClass("btn").addClass("btn-danger").addClass("deleteQuestion").append("Delete")
+ ).append(
+  $(document.createElement('button')).addClass("btn").addClass("btn-default").addClass("advancedSettingQuestion").append("Advanced Setting")
+ );
+ contentTr.append(idTr).append(question).append(answer).append(buttons);
+ editorTableBody.append(contentTr);
+ //データ設定
+ questionData.question[id]=$.extend({},loadedQuestionData);
 }
 
 var questionData={
