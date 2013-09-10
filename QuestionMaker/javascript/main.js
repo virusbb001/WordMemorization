@@ -70,7 +70,7 @@ $(function(){
     }
   });
 
-  //テーブル内のフォーカスが外されたら
+  //テーブル内のフォーカスが外されたら(データ設定)
   $(document).on("blur","#questionEditor>table .editable>input",function(e){
     var thisTr=$(this).closest("tr").removeClass("active");
     var index=thisTr.parent().children("tr").index(thisTr);
@@ -111,7 +111,7 @@ $(function(){
     parentElem.empty();
     parentElem.text(value);
   }).on("keydown",".editable>input",function(e){
-    //キーによる動作てk義
+    //キーによる動作定義
     var flag=true;
     var parentElem=$(this).parent();
 
@@ -194,10 +194,26 @@ $(function(){
     var index=tbody.children("tr").index(thisTr);
     var modal=$("#questionAdvancedSetting");
     var info=modal.find(".modal-body").children(".info");
+    modal.data("questionID",index);
     // 問題設定
     info.children(".id").text("ID:"+index);
     info.children(".question").text("問題文:"+thisTr.children("td").eq(1).text());
+
+    //もしanswerTypeが空であれば単語に指定
+    if(questionData.question[index].answerType==null){
+     questionData.question[index].answerType="Words";
+    }
+    modal.find(".answerType input[name=answerType]").val([questionData.question[index].answerType]);
     modal.modal();
+  });
+
+  $("#questionAdvancedSetting .modal-footer button.ok").on("click",function(){
+    var $this=$(this);
+
+    var modal=$this.closest(".modal");
+    var value=modal.find(".answerType input[name=answerType]:checked").val();
+    var id=modal.data("questionID");
+    questionData.question[id].answerType=value;
   });
 
   $("#questionStatus>.myhead>button.mystatus").click();
