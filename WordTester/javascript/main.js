@@ -57,7 +57,7 @@ $(function(){
       if(e.lengthComputable){
        var percentLoaded=Math.round((e.loaded/e.total)*100);
        progressBar.attr("aria-valuenow",percentLoaded).css("width",percentLoaded+"%");
-       progressSr.text(percentLoaded+"% Complete");
+       progressMessage.text(percentLoaded+"% Complete");
       }
      };
      reader.onload=function(e){
@@ -102,6 +102,7 @@ $(function(){
 
  //File読込欄の表示
  $("#FileDropArea>.myhead>button.mystatus").click();
+ loadExternalFileList();
 });
 
 // データ定義 
@@ -126,18 +127,22 @@ var MistookQuestionData=function(number,answer){
 };
 
 //ファイル名はエラー表示用
-function addQuestion(text,fileName){
+function addQuestion(qData,fileName){
  var object;
- try{
-  object=JSON.parse(text);
- }catch(e){
-  alert("ERROR OCCURED");
-  console.log(e);
-  return false;
+ if(typeof qData === "string"){
+  try{
+   object=JSON.parse(qData);
+  }catch(e){
+   alert("ERROR OCCURED");
+   console.log(e);
+   return false;
+  }
+ }else{
+  object=qData;
  }
 
  //ID確認
- if(object.QuestionID==void(0)||object.QuestionID==""){
+ if(object.QuestionID==null||object.QuestionID==""){
   alert(fileName+":QuestionIDが設定されていません");
   return false;
  }
@@ -158,10 +163,10 @@ function addQuestion(text,fileName){
  //questionIDListに問題名を追加
  var name=object.QuestionName||object.QuestionID;
  $(document.createElement("div")).addClass("checkbox").append(
-   $(document.createElement("label")).append(
-    $(document.createElement("input")).attr("type","checkbox").attr("value",object.QuestionID)
-    ).append(name).append("("+object.question.length+"問)")
-   ).appendTo("#questionIDList");
+  $(document.createElement("label")).append(
+   $(document.createElement("input")).attr("type","checkbox").attr("value",object.QuestionID)
+  ).append(name).append("("+object.question.length+"問)")
+ ).appendTo("#questionIDList");
 }
 
 //出題する問題を作成する
@@ -194,20 +199,20 @@ function createQuestionList(length,option){
 
  //ユニークな数値のリストを作成する
  var qIdList=(function(len,max){
-  var tmp=new Array(max);
-  var ret=new Array(len);
+   var tmp=new Array(max);
+   var ret=new Array(len);
 
-  for(var i=0;i<max;i++){
-   tmp[i]=i;
-  }
+   for(var i=0;i<max;i++){
+    tmp[i]=i;
+   }
 
-  for(var i=0;i<len;i++){
-   var id=Math.floor(Math.random()*tmp.length);
-   ret[i]=tmp[id];
-   tmp.splice(id,1);
-  }
+   for(var i=0;i<len;i++){
+    var id=Math.floor(Math.random()*tmp.length);
+    ret[i]=tmp[id];
+    tmp.splice(id,1);
+   }
 
-  return ret;
+   return ret;
  })(length,allLen);
 
  //lenIdListのiを返す
@@ -303,14 +308,41 @@ function makeAlert(messages){
  alert(messages);
 }
 
+//問題表示
 function displayQuestion(){
  var number=testingData.questionCurrentNumber;
  var data=testingData.questionList[number];
  var objData=questionData[data.id].questions[data.number];
+ var answerType=objData.answerType;
+ if(answerType==null){
+  answerType="Words";
+ }
  $("#question").text(objData.questionSentence);
+
+ //inputのリスト
+ var parentDiv=$("#answer>div");
+ if(answerType=="Sentence"){
+  parentDiv.children("div.form-group:gt(0)").css("display","none");
+  parentDiv.children("div.form-group:eq(0)").removeClass("form-group");
+ }else if(answerType=="Words"){
+  var len=objData.answer.split(/ /).length;
+  var divLen=parentDiv.children("div").addClass("form-group").length;
+  if(divLen<len){
+   while(parentDiv.children("div").length<len){
+    parentDiv.append(
+     $(document.createElement('div')).addClass("form-group").append(
+      $(document.createElement('input')).addClass("form-control").attr("type","text")
+     )
+    );
+   }
+  }
+  console.log(len);
+  parentDiv.children("div:lt("+len+")").css("display","");
+ }
+
  //$("#answer")の中のinputを全て空に
  $("#answer input").each(function(){
-  $(this).val("");
+   $(this).val("");
  });
  //progress表示
  $("#answerProgress .progress .progress-bar").text(""+(number+1)+"/"+testingData.questionList.length).attr("aria-valuenow",(number+1)).css('width',""+((number+1)/testingData.questionList.length*100)+"%");
@@ -320,16 +352,38 @@ function displayQuestion(){
 }
 
 function checkAnswer(){
- var inputs=$("#answer input");
- var answer=inputs.val();
+ var inputs=$("#answer input:visible");
+ console.log(inputs)
+
+ //答え
+ var answer=new Array(0);
+
+ inputs.each(function(){
+   answer.push($(this).val());
+ });
+ console.log(answer);
  var qIdData=testingData.questionList[testingData.questionCurrentNumber];
  var qData=questionData[qIdData.id].questions[qIdData.number];
- console.log(qData.answer);
- if(answer!=qData.answer){
+ //正解
+ if(qData.answerType=="Words"){
+  var qAnswer=qData.answer.split(/ /);
+ }else{
+  var qAnswer=[qData.answer];
+ }
+
+ var isCorrect=true;
+ for(var i=0;i<qAnswer.length;i++){
+  console.log(qAnswer[i]);
+  console.log(answer[i]);
+  isCorrect=isCorrect&&(qAnswer[i]==answer[i]);
+  console.log(isCorrect);
+ }
+
+ if(!isCorrect){
   console.log("Wrong");
   testingData.wrongAnswerList.push(new MistookQuestionData(testingData.questionCurrentNumber,answer));
  }
- 
+
  testingData.questionCurrentNumber++;
  //もし終わってたら結果表示
  if(testingData.questionList.length>testingData.questionCurrentNumber){
@@ -363,7 +417,7 @@ function testEnd(){
     ).append(
      $(document.createElement('td')).text(qData.answer)
     ).append(
-     $(document.createElement('td')).text(object.answer)
+     $(document.createElement('td')).text(object.answer.join(" "))
     ).appendTo(tbody);
   });
   table.css("display","table");

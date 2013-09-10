@@ -175,7 +175,7 @@
      <div class="myhead">
       問題読込
       <button type="button" class="btn btn-default mystatus">show</button>
-      <button class="btn btn-default" type="button" data-target="#fileLoadFromServerModal" data-toggle="modal">サーバーから読み込む</button>
+      <button class="btn btn-default" disabled="disabled" type="button" data-target="#fileLoadFromServerModal" data-toggle="modal">サーバーから読み込む</button>
      </div>
      <div class="mybody" id="FileDropBox">ここにファイルをドロップして各種データを読み込んで下さい</div>
     </div>
@@ -194,22 +194,13 @@
    <!-- 問題画面 -->
    <div id="testDisplay">
     <p id="question">
+     問題
     </p>
-    <form action="#" class="form-inline">
-     <div id="answer" class="form-group">
-      <span class="col-lg-2 col-md-2 control-label">解答</span>
+    <form action="#" class="form-inline row">
+     <div id="answer">
+      <label class="col-lg-2 col-md-2 control-label">解答</label>
       <div class="col-lg-10 col-md-10">
-       <!-- FIXME -->
-       <div class="form-group">
-        <input type="text" class="form-control" />
-       </div>
-       <div class="form-group"><input class="form-control" type="text" /></div>
-       <div class="form-group"><input class="form-control" type="text" /></div>
-       <div class="form-group"><input class="form-control" type="text" /></div>
-       <div class="form-group"><input class="form-control" type="text" /></div>
-       <div class="form-group"><input class="form-control" type="text" /></div>
-       <div class="form-group"><input class="form-control" type="text" /></div>
-       <div class="form-group"><input class="form-control" type="text" /></div>
+       <div class="form-group"><input type="text" class="form-control" /></div>
       </div>
      </div>
     </form>
@@ -254,7 +245,6 @@
     </table>
     <button class="btn btn-primary">OK</button>
    </div>
-
   </div>
  </body>
 </html>

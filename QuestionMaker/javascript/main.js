@@ -39,11 +39,11 @@ $(function(){
     var blob=new Blob([data]);
     var url=webkitURL||URL;
     var blobURL=url.createObjectURL(blob);
-    var fileName=($("#FileName").val()+".json");
+    var fileName=$("#FileName").val();
     var flag=true;
     var messages="";
 
-    fileName+=((!fileName)?"questionData.json":"");
+    fileName+=((!fileName)?"questionData":"")+".json";
     if($(this).attr("download")!=void(0)){
      $(this).attr("download",fileName);
     }

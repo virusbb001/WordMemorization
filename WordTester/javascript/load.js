@@ -13,6 +13,10 @@ loadExternalFile([
  },
  {
   type:"javascript",
+  list:["./javascript/loadExternalQuestionData.js"]
+ },
+ {
+  type:"javascript",
   list:["./javascript/main.js"]
- }
+ },
 ]);

@@ -34,7 +34,7 @@
 }
 
 #fileLoadFromServerModal .modal-body>div>div.fileListTitle>div{
- clear: both;
+ //clear: both;
 }
 
 /* スタイル確認用 */
