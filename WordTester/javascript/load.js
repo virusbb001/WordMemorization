@@ -1,3 +1,6 @@
+/*
+ * あくまでも例です
+ */
 loadExternalFile([
  {
   type:"css",
