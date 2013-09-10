@@ -11,7 +11,7 @@ function loadExternalFileList(){
  }).done(function(data){
    for(var i=0;i<data.length;i++){
     console.log(data);
-    loadExternalQuestionFile(root+data[i]);
+    loadExternalQuestionFile(data[i]);
    }
  });
 }

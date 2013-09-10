@@ -260,7 +260,7 @@ var testingData={
  questionList:[],
  questionCurrentNumber:0,
  wrongAnswerList:[]
-}
+};
 
 //開始時の関数
 function testStart(){
@@ -338,6 +338,7 @@ function displayQuestion(){
   }
   console.log(len);
   parentDiv.children("div:lt("+len+")").css("display","");
+  parentDiv.children("div:gt("+(len-1)+")").css("display","none");
  }
 
  //$("#answer")の中のinputを全て空に
@@ -364,11 +365,12 @@ function checkAnswer(){
  console.log(answer);
  var qIdData=testingData.questionList[testingData.questionCurrentNumber];
  var qData=questionData[qIdData.id].questions[qIdData.number];
+ var qAnswer;
  //正解
  if(qData.answerType=="Words"){
-  var qAnswer=qData.answer.split(/ /);
+  qAnswer=qData.answer.split(/ /);
  }else{
-  var qAnswer=[qData.answer];
+  qAnswer=[qData.answer];
  }
 
  var isCorrect=true;
