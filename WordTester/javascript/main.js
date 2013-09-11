@@ -85,15 +85,29 @@ $(function(){
 
  //問題開始時
  $("#testStart").on("click",function(){
-  testStart();
+   testStart();
  });
 
- //正解の確認と次に進める
+ //もし入力欄があれば次へ
+ //もし入力欄が最後なら正解の確認と次に進める
  $("#answer").on("keydown","input",function(e){
-  if(e.keyCode==13){
-   checkAnswer();
-   e.preventDefault();
-  }
+   var $this=$(this);
+   var list=$this.parent(".form-group").parent().find("input:visible");
+   var index=list.index($this);
+   if(e.keyCode==32){
+    if(index<(list.length-1)){
+     list.eq(index+1).focus();
+     e.preventDefault();
+    }
+   }
+   if(e.keyCode==13){
+    if(index<(list.length-1)){
+     list.eq(index+1).focus();
+    }else{
+     checkAnswer();
+     e.preventDefault();
+    }
+   }
  });
 
  $("#testResult>button").on("click",function(e){
@@ -227,7 +241,7 @@ function createQuestionList(length,option){
   return id;
  };
  for(var i=0;i<qIdList.length;i++){
-  var id=getId(qIdList[i]);
+ var id=getId(qIdList[i]);
   if(id===void(0)){
    makeAlert("Something wrong");
    return void(0);
@@ -378,11 +392,9 @@ function checkAnswer(){
   console.log(qAnswer[i]);
   console.log(answer[i]);
   isCorrect=isCorrect&&(qAnswer[i]==answer[i]);
-  console.log(isCorrect);
  }
 
  if(!isCorrect){
-  console.log("Wrong");
   testingData.wrongAnswerList.push(new MistookQuestionData(testingData.questionCurrentNumber,answer));
  }
 
@@ -407,7 +419,6 @@ function testEnd(){
   //間違えた問題表示
   $.each(testingData.wrongAnswerList,function(index,object){
     var qIdData=testingData.questionList[object.number];
-    console.log(qIdData);
     var qData=questionData[qIdData.id].questions[qIdData.number];
     var qName=questionData[qIdData.id].questionName;
     var tableRow=$(document.createElement('tr')).append(
