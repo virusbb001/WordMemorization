@@ -108,20 +108,20 @@ $(function(){
   $(document).on("blur",".editable>input",function(e){
     var parentElem=$(this).parent();
     value=$(this).val();
-    parentElem.empty();
+    $(this).remove();
     parentElem.text(value);
   }).on("keydown",".editable>input",function(e){
     //キーによる動作定義
     var flag=true;
     var parentElem=$(this).parent();
 
-    //Enter or Tab
-    if(e.keyCode==13||e.keyCode==9){
+    //Enter or Tab or Esc
+    if(e.keyCode==13||e.keyCode==9||e.keyCode==27){
      $(this).blur();
      //Shift+Tabなら前へ
      if(e.shiftKey&&e.keyCode==9){
       parentElem.prev(".editable").click();
-     }else{
+     }else if(e.keyCode!=27){ //escでなければ次へ
       parentElem.next(".editable").click();
      }
      flag=false;
