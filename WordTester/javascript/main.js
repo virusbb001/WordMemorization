@@ -350,7 +350,6 @@ function displayQuestion(){
     );
    }
   }
-  console.log(len);
   parentDiv.children("div:lt("+len+")").css("display","");
   parentDiv.children("div:gt("+(len-1)+")").css("display","none");
  }
@@ -368,7 +367,6 @@ function displayQuestion(){
 
 function checkAnswer(){
  var inputs=$("#answer input:visible");
- console.log(inputs)
 
  //答え
  var answer=new Array(0);
@@ -381,14 +379,20 @@ function checkAnswer(){
  var qData=questionData[qIdData.id].questions[qIdData.number];
  var qAnswer;
  //正解
+ //qData未定義時の処理
+ if(qData.answerType==null){
+  qData.answerType="Words";
+ }
  if(qData.answerType=="Words"){
   qAnswer=qData.answer.split(/ /);
  }else{
   qAnswer=[qData.answer];
  }
+ console.log(qAnswer);
 
  var isCorrect=true;
  for(var i=0;i<qAnswer.length;i++){
+  console.log(i);
   console.log(qAnswer[i]);
   console.log(answer[i]);
   isCorrect=isCorrect&&(qAnswer[i]==answer[i]);

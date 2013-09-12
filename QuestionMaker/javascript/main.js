@@ -284,6 +284,9 @@ function debugMode(){
 function deleteQuestion(tbody,index){
  var list=tbody.children("tr");
  var target=list.eq(index);
+
+ //問題データ削除
+ questionData.question.splice(index,1);
  // 更新
  for (i=index+1;i<list.length;i++){
   list.eq(i).children("td").eq(0).text(i-1);
