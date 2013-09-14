@@ -295,6 +295,11 @@ function deleteQuestion(tbody,index){
 }
 
 function addQuestion(data,fileName){
+ console.log(fileName);
+ // FIXME 間違っているかもしれない(グループ後の?)
+ var file=fileName.match("(?:.+/)?(.+?)\.[a-zA-Z0-9]+$")[1];
+ $("#FileName").val(file);
+ //ファイル名指定
  data=JSON.parse(data);
  var meta=["QuestionID","QuestionName","Author","version"];
  //メタデータ追加
