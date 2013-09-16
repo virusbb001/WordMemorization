@@ -11,7 +11,7 @@
 # 動作を保証するブラウザ #
 * Google Chrome (version>=29)
 
-環境に合わせて~~HTML~~  ** *App* /javascript/load.js** を書き換えてください
+環境に合わせて ~~HTML~~ ** *App* /javascript/load.js** を書き換えてください
 
 # toolsについて #
 * convert.pl "問題<>解答"形式のファイルを問題データに変換します
