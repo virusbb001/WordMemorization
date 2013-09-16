@@ -4,7 +4,7 @@ use strict;
 use warnings;
 use utf8;
 
-use JSON qw/encode_json decode_json/ ;
+use JSON;
 use Encode;
 use Text::ParseWords;
 
@@ -93,7 +93,7 @@ while(my $line = <FH>){
  my @tmp;
 
  chomp($line);
- @tmp=parse_line(",",1,$line);
+ @tmp=parse_line(",",0,$line);
  $questionData{"questionSentence"}=shift(@tmp);
  $questionData{"answer"}=shift(@tmp);
  push(@questionsList,\%questionData);
@@ -101,7 +101,7 @@ while(my $line = <FH>){
 $data{"question"}=\@questionsList;
 close(FH);
 
-$jsonStr= encode_json(\%data);
+$jsonStr= to_json(\%data,{utf8 => 1, pretty => 1});
 
 if(! $flag){
  print OUTFILE $jsonStr;
