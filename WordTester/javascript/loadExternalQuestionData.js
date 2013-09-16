@@ -10,7 +10,6 @@ function loadExternalFileList(){
    url:fileUrl
  }).done(function(data){
    for(var i=0;i<data.length;i++){
-    console.log(data);
     loadExternalQuestionFile(data[i]);
    }
  });
@@ -20,7 +19,6 @@ function loadExternalQuestionFile(url){
  $.ajax({
    url:url
  }).done(function(data){
-   console.log(data);
    addQuestion(data,url);
  });
 }
