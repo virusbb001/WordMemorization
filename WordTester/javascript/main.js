@@ -440,6 +440,7 @@ function testEnd(){
   table.css("display","table");
  }
  $("#testResult").slideDown();
+ $("#testResult>button").focus();
 }
 
 //終了から設定画面へ
