@@ -374,7 +374,6 @@ function checkAnswer(){
  inputs.each(function(){
    answer.push($(this).val());
  });
- console.log(answer);
  var qIdData=testingData.questionList[testingData.questionCurrentNumber];
  var qData=questionData[qIdData.id].questions[qIdData.number];
  var qAnswer;
@@ -388,13 +387,9 @@ function checkAnswer(){
  }else{
   qAnswer=[qData.answer];
  }
- console.log(qAnswer);
 
  var isCorrect=true;
  for(var i=0;i<qAnswer.length;i++){
-  console.log(i);
-  console.log(qAnswer[i]);
-  console.log(answer[i]);
   isCorrect=isCorrect&&(qAnswer[i]==answer[i]);
  }
 
