@@ -345,7 +345,7 @@ function displayQuestion(){
    while(parentDiv.children("div").length<len){
     parentDiv.append(
      $(document.createElement('div')).addClass("form-group").append(
-      $(document.createElement('input')).addClass("form-control").attr("type","text").attr("spellcheck",false);
+      $(document.createElement('input')).addClass("form-control").attr("type","text").attr("spellcheck",false)
      )
     );
    }
