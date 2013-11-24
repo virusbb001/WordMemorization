@@ -427,9 +427,9 @@ function testEnd(){
     ).append(
      $(document.createElement('td')).text(qData.questionSentence)
     ).append(
-     $(document.createElement('td')).text(qData.answer)
-    ).append(
      $(document.createElement('td')).text(object.answer.join(" "))
+    ).append(
+     $(document.createElement('td')).text(qData.answer)
     ).appendTo(tbody);
   });
   table.css("display","table");
