@@ -26,13 +26,13 @@ if(!defined($ARGV[0])){
 }else{
  $inputFileName=$ARGV[0];
 }
-open(FH,"< $inputFileName") || die("File Open Error");
+open(FH,"<",$inputFileName) || die("File Open Error");
 
 if(! $flag ){
  print("Output File Name> ");
  $filename=<STDIN>; 
  chomp($filename);
- open(OUTFILE,">$filename") || die ("Cannot open $filename");
+ open(OUTFILE,">",$filename) || die ("Cannot open $filename");
 }
 
 if(!defined($ARGV[1])){
@@ -41,7 +41,7 @@ if(!defined($ARGV[1])){
 }else{
  $metafile=$ARGV[1];
 }
-if(!(open(META,"< $metafile"))){
+if(!(open(META,"<", $metafile))){
  print("METAFILE LOAD ERROR\n");
  print("INPUT MANUALLY\n");
  print("AUTHER NAME> ");
