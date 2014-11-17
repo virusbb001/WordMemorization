@@ -67,8 +67,8 @@ if(!(open(META,"< $metafile"))){
   push(@text,$_);
  }
  my $str=join('',@text);
- #$str=Encode::decode_utf8($str);
- #$str=utf8::is_utf8($str)?encode('utf-8',$str):$str;
+ $str=Encode::decode_utf8($str);
+ $str=utf8::is_utf8($str)?encode('utf-8',$str):$str;
  my $metaData=decode_json($str);
  $data{"version"}=$metaData->{"version"};
  $data{"Auther"}=$metaData->{"Auther"};
