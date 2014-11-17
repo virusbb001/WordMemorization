@@ -35,7 +35,7 @@ $(function(){
   //ここで警告を表示する
   $("#questionEditorToolBoxSave").on("click",function(e){
     $(this).focus();
-    var data=JSON.stringify(questionData);
+    var data=JSON.stringify(questionData,null,2);
     var blob=new Blob([data]);
     var url=webkitURL||URL;
     var blobURL=url.createObjectURL(blob);
