@@ -99,7 +99,7 @@ while(my $line = <FH>){
 $data{"question"}=\@questionsList;
 close(FH);
 
-$jsonStr= encode_json(\%data);
+$jsonStr= JSON::PP->new->utf8->pretty->encode(\%data);
 
 if(! $flag){
  print OUTFILE $jsonStr;
