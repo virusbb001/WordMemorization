@@ -4,7 +4,9 @@ use strict;
 use warnings;
 use utf8;
 
-use JSON qw/encode_json decode_json/ ;
+use open ":utf8";
+
+use JSON::PP;
 use Encode;
 
 #問題<>回答
