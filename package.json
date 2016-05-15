@@ -1,0 +1,19 @@
+{
+  "name": "word-memorization",
+  "version": "1.0.0",
+  "description": "word test tool",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/virusbb001/WordMemorization.git"
+  },
+  "author": "virus",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/virusbb001/WordMemorization/issues"
+  },
+  "homepage": "https://github.com/virusbb001/WordMemorization#readme"
+}
