@@ -15,5 +15,12 @@
   "bugs": {
     "url": "https://github.com/virusbb001/WordMemorization/issues"
   },
-  "homepage": "https://github.com/virusbb001/WordMemorization#readme"
+  "homepage": "https://github.com/virusbb001/WordMemorization#readme",
+  "devDependencies": {
+    "babel": "^6.5.2",
+    "eslint": "^2.10.1",
+    "gulp-babel": "^6.1.2",
+    "gulp-bower-files": "^0.2.7",
+    "gulp-eslint": "^2.0.0"
+  }
 }
